@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "StockPortfolio",
+			"path": "."
+		},
+		{
+			"name": "node_modules",
+			"path": "../Stock_Portfolio/node_modules"
+		}
+	],
+	"settings": {}
+}
