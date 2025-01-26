@@ -4,29 +4,29 @@ import { motion } from "framer-motion";
 
 export default function UpdateForm() {
   const navigate = useNavigate();
-  const { stockSymbol } = useParams();  // Capture the stockSymbol from the URL
+  const { stockSymbol } = useParams(); // Capture the stockSymbol from the URL
 
-  const [stockData, setStockData] = useState({
-    stockId: '',
-    stockName: '',
-    stockSymbol: '',
-    stockExchange: '',
-    quantity: '',
-    stockPrice: ''
-  });
+  const [stockData, setStockData] = useState(null); // Initialize as null
+  const [isLoading, setIsLoading] = useState(true); // Track loading state
 
   // Fetch stock data to pre-fill the form
   useEffect(() => {
     const fetchStockData = async () => {
+      setIsLoading(true); // Start loading
       try {
-        const response = await fetch(`https://userstocksportfolio.up.railway.app/userstocks/${stockSymbol}`);
+        const response = await fetch(
+          `https://userstocksportfolio.up.railway.app/userstocks/${stockSymbol}`
+        );
         if (!response.ok) {
-          throw new Error('Stock not found');
+          throw new Error("Stock not found");
         }
         const data = await response.json();
         setStockData(data);
       } catch (error) {
         console.error(error);
+        setStockData(null); // Handle error by setting to null
+      } finally {
+        setIsLoading(false); // End loading
       }
     };
 
@@ -39,11 +39,14 @@ export default function UpdateForm() {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch('https://userstocksportfolio.up.railway.app/userstocks', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://userstocksportfolio.up.railway.app/userstocks",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         navigate("/mystocks");
@@ -55,6 +58,32 @@ export default function UpdateForm() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <motion.div
+        className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8 flex justify-center items-center h-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        <span className="text-gray-300">Loading...</span>
+      </motion.div>
+    );
+  }
+
+  if (!stockData) {
+    return (
+      <motion.div
+        className="flex justify-center items-center h-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        <span className="text-red-500">Failed to load stock data.</span>
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className="bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8"
@@ -63,7 +92,7 @@ export default function UpdateForm() {
       transition={{ delay: 0.2 }}
     >
       <form onSubmit={handleSubmit}>
-        <div className="space-y-12">
+      <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base/7 font-semibold">Stock Details</h2>
 
@@ -154,8 +183,6 @@ export default function UpdateForm() {
             </div>
           </div>
         </div>
-
-        {/* Buttons */}
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
             type="button"

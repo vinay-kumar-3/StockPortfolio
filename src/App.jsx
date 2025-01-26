@@ -7,6 +7,7 @@ import OverviewPage from "./pages/OverviewPage";
 import MyStocksPage from "./pages/MyStocksPage";
 import FormPage from "./pages/FormPage";
 import UpdateFormPage from "./pages/UpdateFormPage";
+import SettingsPage from "./pages/SettingsPage";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 				<Route path="/mystocks" element={<MyStocksPage />} />
 				<Route path="/addform" element={<FormPage />} />
 				<Route path="/addform/:stockSymbol" element={<UpdateFormPage />} />
+				<Route path="/settings" element={<SettingsPage />} />
 			</Routes>
 		</div>
 	);

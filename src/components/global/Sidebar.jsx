@@ -1,7 +1,7 @@
 import { BarChart2, Heart, Menu, TrendingUp} from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SIDEBAR_ITEMS = [
 	{
@@ -11,12 +11,12 @@ const SIDEBAR_ITEMS = [
 		href: "/",
 	},
 	{ name: "Stocks", icon: TrendingUp, color: '#10B981', href: "/mystocks" },
-	{ name: "Favourites", icon: Heart, color: "#EC4899", href: "/favourites" },
 	
 ];
 
 const Sidebar = () => {
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+	const location = useLocation();
 
 	return (
 		<motion.div
@@ -29,8 +29,8 @@ const Sidebar = () => {
 				<motion.button
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}
-					onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-					className='p-2 rounded-full hover:bg-gray-700 transition-colors max-w-fit'
+					onClick={() => {setIsSidebarOpen(!isSidebarOpen)}}
+					className='p-2 flex flex-row items-center rounded-full hover:bg-gray-700 transition-colors max-w-fit'
 				>
 					<Menu size={24} />
 				</motion.button>
@@ -38,7 +38,10 @@ const Sidebar = () => {
 				<nav className='mt-8 flex-grow'>
 					{SIDEBAR_ITEMS.map((item) => (
 						<Link key={item.href} to={item.href}>
-							<motion.div className='flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2'>
+							<motion.div className={`flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2 ${
+								location.pathname === item.href ? "bg-gray-700 text-gray-200" : "hover:bg-gray-700"
+								}`}
+							>
 								<item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
 								<AnimatePresence>
 									{isSidebarOpen && (

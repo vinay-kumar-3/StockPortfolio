@@ -3,7 +3,7 @@ import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProductsTable = () => {
+const StocksTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [stockData, setStockData] = useState([]);
@@ -72,7 +72,7 @@ const ProductsTable = () => {
       transition={{ delay: 0.2 }}
     >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-gray-100">Product List</h2>
+        <h2 className="text-xl font-semibold text-gray-100">Stocks List</h2>
         <div className="relative flex gap-3">
           <input
             type="text"
@@ -170,7 +170,7 @@ const ProductsTable = () => {
                   colSpan="6"
                   className="px-6 py-4 text-center text-sm text-gray-400"
                 >
-                  No Data found.
+                  Loading ...
                 </td>
               </tr>
             )}
@@ -181,4 +181,4 @@ const ProductsTable = () => {
   );
 };
 
-export default ProductsTable;
+export default StocksTable;
