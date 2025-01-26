@@ -20,7 +20,7 @@ Before running the application, make sure you have the following installed:
 
 - Node.js
 
-### Installation
+### Steps to Run the Project Locally
 
 1. Clone the repository
 
