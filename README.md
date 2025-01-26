@@ -1,4 +1,4 @@
-##Project Structure
+###Project Structure
 
 ```bash
 ├── public/          # Static assets (e.g., images, icons)  
@@ -28,13 +28,13 @@ Before running the application, make sure you have the following installed:
 git clone https://github.com/vinay-kumar-3/StockPortfolio.git
 cd StockPorfolio
 ```
-2: Install Dependencies
+2. Install Dependencies
 
 ```bash
 # Using npm  
 npm install
 ```
-3: Start the Development Server
+3. Start the Development Server
 
 ```bash
 # Using npm  
