@@ -1,12 +1,45 @@
-<<<<<<< HEAD
-# StockPortfolio
-=======
-# React + Vite
+## Getting Started
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#Project Structure
 
-Currently, two official plugins are available:
+```bash
+├── public/          # Static assets (e.g., images, icons)  
+├── src/             # Main source code  
+│   ├── components/  # Reusable React components  
+│   ├── pages/       # Pages for the application  
+│   ├── styles/      # Tailwind/global styles  
+│   ├── App.jsx      # Root component  
+│   └── main.jsx     # Entry point for Vite  
+├── package.json     # Project metadata and dependencies  
+├── tailwind.config.js  # Tailwind CSS configuration  
+├── postcss.config.js   # PostCSS configuration  
+└── vite.config.js      # Vite configuration  
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
->>>>>>> 2bbbff2 (Initial commit)
+### Prerequisites
+
+Before running the application, make sure you have the following installed:
+
+- Node.js
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/vinay-kumar-3/StockPortfolio.git
+cd StockPorfolio
+```
+2: Install Dependencies
+
+```bash
+# Using npm  
+npm install
+```
+3: Start the Development Server
+
+```bash
+# Using npm  
+npm run dev 
+```
+
