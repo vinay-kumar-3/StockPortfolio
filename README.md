@@ -1,6 +1,4 @@
-## Getting Started
-
-#Project Structure
+##Project Structure
 
 ```bash
 ├── public/          # Static assets (e.g., images, icons)  
