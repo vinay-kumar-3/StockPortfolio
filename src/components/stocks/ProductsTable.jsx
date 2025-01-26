@@ -11,7 +11,7 @@ const ProductsTable = () => {
   const navigate = useNavigate(); // Correctly initialize the useNavigate hook
 
   useEffect(() => {
-    fetch("http://localhost:8080/userstocks")
+    fetch("https://userstocksportfolio.up.railway.app/userstocks")
       .then((res) => res.json())
       .then((data) => {
         setStockData(data);
