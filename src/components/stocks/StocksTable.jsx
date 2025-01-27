@@ -2,23 +2,20 @@ import { motion } from "framer-motion";
 import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useFetch from "../../useFetch";
 
 const StocksTable = () => {
+  const { data:stockData, isPending, error} = useFetch("https://userstocksportfolio.up.railway.app/userstocks");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [stockData, setStockData] = useState([]);
 
   const navigate = useNavigate(); // Correctly initialize the useNavigate hook
 
-  useEffect(() => {
-    fetch("https://userstocksportfolio.up.railway.app/userstocks")
-      .then((res) => res.json())
-      .then((data) => {
-        setStockData(data);
-        setFilteredProducts(data);
-      })
-      .catch((err) => console.error("Failed to fetch data:", err));
-  }, []);
+  useEffect(() =>{
+    if(stockData){
+      setFilteredProducts(stockData)
+    }
+  })
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
@@ -118,8 +115,16 @@ const StocksTable = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-700">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
+
+            { error && <tr>
+                <td
+                  colSpan="6"
+                  className="px-6 py-4 text-center text-sm text-gray-400"
+                >
+                  {error}
+                </td>
+              </tr> }
+            { filteredProducts && filteredProducts.map((product) => (
                 <motion.tr
                   key={product.stockSymbol}
                   initial={{ opacity: 0 }}
@@ -163,17 +168,15 @@ const StocksTable = () => {
                     </button>
                   </td>
                 </motion.tr>
-              ))
-            ) : (
-              <tr>
+              ))}
+            { isPending && <tr>
                 <td
                   colSpan="6"
                   className="px-6 py-4 text-center text-sm text-gray-400"
                 >
                   Loading ...
                 </td>
-              </tr>
-            )}
+              </tr> }
           </tbody>
         </table>
       </div>
