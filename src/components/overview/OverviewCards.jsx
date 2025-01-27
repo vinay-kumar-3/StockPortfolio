@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { DollarSign, Coins, ArrowBigUp, ArrowBigDown, ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 const overviewData = [
-	{ name: "Revenue", value: "$625.75", change: 12.5, icon: DollarSign , color:'#6366F1'},
+	{ name: "Portfolio value", value: "$625.75", change: 12.5, icon: DollarSign , color:'#6366F1'},
 	{ name: "Investment", value: "$585.78", change: 8.3, icon: Coins ,  color:'#F59E0B'},
 	{ name: "Profits", value: "$79.97", change: -3.2, icon: ArrowBigUp , color:'#10B981'},
 	{ name: "Loss", value: "$57.7", change: 15.7, icon: ArrowBigDown ,color:'#EF4444' },

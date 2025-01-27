@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const revenueData = [
-	{ month: "Jan", revenue: 4000, investment: 3800 },
-	{ month: "Feb", revenue: 3000, investment: 3200 },
-	{ month: "Mar", revenue: 5000, investment: 4500 },
-	{ month: "Apr", revenue: 4500, investment: 4200 },
-	{ month: "May", revenue: 6000, investment: 5500 },
-	{ month: "Jun", revenue: 5500, investment: 5800 },
-	{ month: "Jul", revenue: 7000, investment: 6500 },
+	{ month: "Jan", PortfolioValue: 4000, investment: 3800 },
+	{ month: "Feb", PortfolioValue: 3000, investment: 3200 },
+	{ month: "Mar", PortfolioValue: 5000, investment: 4500 },
+	{ month: "Apr", PortfolioValue: 4500, investment: 4200 },
+	{ month: "May", PortfolioValue: 6000, investment: 5500 },
+	{ month: "Jun", PortfolioValue: 5500, investment: 5800 },
+	{ month: "Jul", PortfolioValue: 7000, investment: 6500 },
 ];
 
 const RevenueChart = () => {
@@ -23,7 +23,7 @@ const RevenueChart = () => {
 			transition={{ delay: 0.2 }}
 		>
 			<div className='flex justify-between items-center mb-6'>
-				<h2 className='text-xl font-semibold text-gray-100'>Revenue vs Investment</h2>
+				<h2 className='text-xl font-semibold text-gray-100'>Portfolio value vs Investment</h2>
 				<select
 					className='bg-gray-700 text-white rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500'
 					value={selectedTimeRange}
@@ -47,7 +47,7 @@ const RevenueChart = () => {
 							itemStyle={{ color: "#E5E7EB" }}
 						/>
 						<Legend />
-						<Area type='monotone' dataKey='revenue' stroke='#8B5CF6' fill='#8B5CF6' fillOpacity={0.3} />
+						<Area type='monotone' dataKey='PortfolioValue' stroke='#8B5CF6' fill='#8B5CF6' fillOpacity={0.3} />
 						<Area type='monotone' dataKey='investment' stroke='#10B981' fill='#10B981' fillOpacity={0.3} />
 					</AreaChart>
 				</ResponsiveContainer>

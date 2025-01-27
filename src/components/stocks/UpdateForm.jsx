@@ -1,37 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import useFetch from "../../useFetch";
 
 export default function UpdateForm() {
   const navigate = useNavigate();
   const { stockSymbol } = useParams(); // Capture the stockSymbol from the URL
 
-  const [stockData, setStockData] = useState(null); // Initialize as null
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
-
-  // Fetch stock data to pre-fill the form
-  useEffect(() => {
-    const fetchStockData = async () => {
-      setIsLoading(true); // Start loading
-      try {
-        const response = await fetch(
-          `https://userstocksportfolio.up.railway.app/userstocks/${stockSymbol}`
-        );
-        if (!response.ok) {
-          throw new Error("Stock not found");
-        }
-        const data = await response.json();
-        setStockData(data);
-      } catch (error) {
-        console.error(error);
-        setStockData(null); // Handle error by setting to null
-      } finally {
-        setIsLoading(false); // End loading
-      }
-    };
-
-    fetchStockData();
-  }, [stockSymbol]);
+  const { data:stockData , isPending : isLoading, error } = useFetch(`https://userstocksportfolio.up.railway.app/userstocks/${stockSymbol}`)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -71,7 +46,7 @@ export default function UpdateForm() {
     );
   }
 
-  if (!stockData) {
+  if (error) {
     return (
       <motion.div
         className="flex justify-center items-center h-full"
