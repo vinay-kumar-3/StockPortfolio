@@ -2,20 +2,39 @@ import { motion } from "framer-motion";
 import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchStockDetails } from "../utils/api/stock-api";
 import useFetch from "../../useFetch";
 
 const StocksTable = () => {
   const { data:stockData, isPending, error} = useFetch("https://userstocksportfolio.up.railway.app/userstocks");
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [logos, setLogos] = useState({});
 
   const navigate = useNavigate(); // Correctly initialize the useNavigate hook
 
-  useEffect(() =>{
-    if(stockData){
-      setFilteredProducts(stockData)
+  useEffect(() => {
+    if (stockData) {
+      const fetchStockLogos = async () => {
+        const updatedProducts = await Promise.all(
+          stockData.map(async (stock) => {
+            try {
+              const result = await fetchStockDetails(stock.stockSymbol);
+              console.log(result.logo)
+              return { ...stock, stockLogo: result.logo }; // Use the logo from the API response
+            } catch (error) {
+              console.error('Error fetching logo for:', stock.stockSymbol, error);
+              return { ...stock, stockLogo: '' }; // Fallback if the API call fails
+            }
+          })
+        );
+        setFilteredProducts(updatedProducts);
+      };
+
+      fetchStockLogos();
     }
-  })
+  }, [stockData]);
+  
 
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
@@ -130,10 +149,12 @@ const StocksTable = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
+                  onClick={ () => navigate(`/stockdetails/${product.stockSymbol}`) }
+                  className="cursor-pointer"
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center">
                     <img
-                      src="https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww"
+                      src={product.stockLogo}
                       alt="Product img"
                       className="size-10 rounded-full"
                     />
