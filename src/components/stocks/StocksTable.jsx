@@ -5,11 +5,59 @@ import { useNavigate } from "react-router-dom";
 import { fetchStockDetails } from "../utils/api/stock-api";
 import useFetch from "../../useFetch";
 
+const defaultStocks = [
+  {
+    stockSymbol: "AAPL",
+    quantity: 1,
+    stockExchange: "NASDAQ",
+    stockName: "Apple Inc.",
+    stockPrice: 172.78,
+    stockLogo: "https://logo.clearbit.com/apple.com",
+  },
+  {
+    stockSymbol: "AMZN",
+    quantity: 1,
+    stockExchange: "NASDAQ",
+    stockName: "Amazon.com Inc.",
+    stockPrice: 234.85,
+    stockLogo: "https://logo.clearbit.com/amazon.com",
+  },
+  {
+    stockSymbol: "GOOGL",
+    quantity: 1,
+    stockExchange: "NASDAQ",
+    stockName: "Alphabet Inc",
+    stockPrice: 200.21,
+    stockLogo: "https://logo.clearbit.com/google.com",
+  },
+  {
+    stockSymbol: "NFLX",
+    quantity: 1,
+    stockExchange: "NASDAQ",
+    stockName: "Netflix Inc.",
+    stockPrice: 977.59,
+    stockLogo: "https://logo.clearbit.com/netflix.com",
+  },
+  {
+    stockSymbol: "TSLA",
+    quantity: 1,
+    stockExchange: "NASDAQ",
+    stockName: "Tesla Inc",
+    stockPrice: 406.58,
+    stockLogo: "https://logo.clearbit.com/tesla.com",
+  },
+];
+
 const StocksTable = () => {
-  const { data:stockData, isPending, error} = useFetch("https://userstocksportfolio.up.railway.app/userstocks");
+  const { data, isPending, error} = useFetch("https://userstocksportfolio.up.railway.app/userstocks");
   const [searchTerm, setSearchTerm] = useState("");
+  let stockData = data;
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [logos, setLogos] = useState({});
+
+  // In the case of backend subscription expires
+  if (error){
+    stockData = defaultStocks;
+  }
 
   const navigate = useNavigate(); // Correctly initialize the useNavigate hook
 
@@ -49,7 +97,7 @@ const StocksTable = () => {
 
   const handleForm = () => {
     navigate("/addform"); // Navigate to the form page for adding new stock
-  };
+  };  
 
   const handleDelete = async (stockSymbol) => {
     try {
@@ -135,7 +183,7 @@ const StocksTable = () => {
 
           <tbody className="divide-y divide-gray-700">
 
-            { error && <tr>
+            { (!filteredProducts && error) && <tr>
                 <td
                   colSpan="6"
                   className="px-6 py-4 text-center text-sm text-gray-400"
